@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import Select from 'react-dropdown-select'
+import React,{ useState, useEffect } from 'react';
 
 function App() {
+  const [options, setOptions] = useState( [
+    { id: 1, country: "America" },
+    { id: 2, country: "India" }, 
+    { id: 3, country: "Africa" },
+  ] )
+
+  const [selectedOptions, setSelectedOptions] = useState( [ ] )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+        <div style={{width:'250px', margin:'15px'}} >
+          <Select options={ options.map( ( item, index ) => { 
+            return { value: item.id, label: item.country }
+          } ) } values={selectedOptions} onChange={ ( values ) => setSelectedOptions([...values]) } />
+        </div>
+      </>
   );
 }
 
