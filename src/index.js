@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ProductForm from 'components/product-form';
+import ProductYupForm from './components/product-yup-form';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ProductYupForm />
   </React.StrictMode>,
   document.getElementById('root')
 );
