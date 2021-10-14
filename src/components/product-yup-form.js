@@ -13,6 +13,9 @@ export default function ProductYupForm() {
 
     yup.addMethod( yup.mixed, 'allowedMime', function( mime, error_message=null  ) {
         return this.test( 'test-1', error_message, function( value ) {
+            if( !value ){
+                return
+            }
             let _mime = value.type.split("/")[0]
             let { path, createError } = this
             return (
@@ -31,6 +34,7 @@ export default function ProductYupForm() {
         validationSchema : yup.object(
             {
                 name : yup.string().required("Name required."),
+                price : yup.number().min(1).required("Price is required"),
                 image : yup.mixed().required("File is required").file( "Must be a file" ).allowedMime("image"),
             }
         ),
