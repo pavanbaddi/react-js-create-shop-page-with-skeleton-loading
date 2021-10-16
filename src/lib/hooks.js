@@ -12,7 +12,7 @@ export default function usePosts(  ){
     const fetchPosts = async( ) => {
         setIsLoading(true)
 
-        let url = `https://jsonplaceholder.typicode.com/posts`
+        let url = `http://jsonplaceholder.typicode.com/photos`
         let res = await fetch( url )
         res = await res.json()
 
