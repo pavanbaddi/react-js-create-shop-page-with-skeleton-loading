@@ -1,15 +1,43 @@
-import usePosts from 'lib/hooks';
 import React, { useEffect, useState } from 'react'
 import theme_styles from './themes.module.css'
+import './App.css'
 
 function App() {
 
   const [ list, setList ] = useState( [] )
-  const posts = usePosts()
-
   useEffect( ( ) => {
+    applyTheme()
     fetchGallery()
-}, [  ] )
+  }, [  ] )
+
+  const getTheme = () => {
+    let theme = localStorage.getItem("theme")
+
+    if( theme === "theme-light" ){
+      theme = "theme-light"
+    } else {
+      theme = "theme-dark"
+    }
+
+    return theme
+  }
+
+  const setTheme = ( theme ) => {
+    localStorage.setItem("theme", theme)
+  }
+
+  const applyTheme = (  ) => {
+    let theme = getTheme()
+    let body = document.getElementsByTagName('body')[0]
+    
+    if( theme === "theme-light" ){
+      body.classList.remove( theme_styles["theme-dark"] )
+      body.classList.add( theme_styles["theme-light"] )
+    } else {
+      body.classList.remove( theme_styles["theme-light"] )
+      body.classList.add( theme_styles["theme-dark"] )
+    }    
+  }
 
   const fetchGallery = async( ) => {
       let url = `http://jsonplaceholder.typicode.com/photos`
@@ -23,36 +51,45 @@ function App() {
   }
 
   const toggleMode = ( ) => {
-    // https://www.smashingmagazine.com/2020/04/dark-mode-react-apps-styled-components/ 
+    let theme = getTheme()
+    
+    if( theme === "theme-light" ){
+      theme = "theme-dark"
+    } else {
+      theme = "theme-light"
+    }
+    
+    setTheme( theme )
+    applyTheme( theme )
   }
 
 
   return (
     <>
 
-      <div style={{width:"80%", margin:"auto"}} >
-        <h1 style={{textAlign:"center"}}  >Gallery | <button onClick={toggleMode} type="button">Mode</button></h1>
+      <div className="container"  >
+        <h1 className="text-center"  >Gallery | <button onClick={toggleMode} type="button">Toggle Theme</button></h1>
 
-        <div style={ { display : 'grid', gridTemplateColumns : 'repeat(3,1fr)', gridAutoRows: '300px' } } >
+        <div className="gallery-wrapper" >
           {
             ( list.length )
               ? list.map( (item, index) => {
 
-                    if( index >= 9 ){
+                    if( index >= 18 ){
                       return null
                     }
 
                     return (
-                      <div key={index} style={ { border : '1px solid #eee', padding : '10px 5px' } } >
+                      <div key={index} className="item"  >
                         <div>
-                          <img src={item["url"]} style={ { width : '100%', height : '200px', objectFit : 'contain' } } alt="" />
+                          <img src={item["url"]} className="img" alt="" />
                         </div>
                         <p>{ item.title }</p>
                       </div>
                     )
                 })
               : (
-                <div>Please wait...</div>
+                <p>Please wait...</p>
               )
             
           }
