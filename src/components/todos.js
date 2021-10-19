@@ -12,16 +12,17 @@ export default function Todos() {
         setList([...list])
     }
 
-    // will render only once
+    // called only once during first render
     useEffect(() => {
         console.log(`Todos Component : First Render`)
     }, [  ] );
 
-    // will re render every time 
+    // called on every re-render 
     useEffect(() => {
         console.log(`Todos Component : Renders Everytime`)
     });
     
+    // called when the list changes
     useEffect(() => {
         console.log(`Todos Component : Renders when list state gets updated`)
     }, [ list ] );
