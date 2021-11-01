@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Todos from 'components/todos';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <Todos />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

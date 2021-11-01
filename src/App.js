@@ -1,55 +1,43 @@
 import React, { useEffect, useState } from 'react'
-import './App.css'
+import styles from './App.module.css'
+import PostLoader from 'components/loaders/post-loader'
+import ProductCard from 'components/product-card'
 
 function App() {
 
-  const [form, setForm] = useState({
-      name : '',
-      age : '',
-  }); 
+  const [products, setProducts] = useState([])
 
-  const [canVote, setCanVote] = useState( null ); 
+  useEffect( ()=>{
+    init()
+  }, [] )
 
-  useEffect(() => {
-    console.log('component loaded')
-  } );
-
-  useEffect(() => {
-    console.log('form age value changed')
-    setCanVote( ( form.age >= 18 )? true : false )
-  }, [ form.age ] );
-
+  const init = async()=>{
+    let res = await fetch( "https://fakestoreapi.com/products" )
+    res = await res.json()
+    
+    setProducts([...res])
+  }
 
   return (
     <>
-      <div>
-        <label>Name</label>
-        <input type="text" onChange={ ( e ) => setForm( { ...form, name : e.target.value } )  } value={form.name} />
-      </div>
-      <div>
-        <label>Age</label>
-        <input type="number" onChange={ ( e ) => setForm( { ...form, age : e.target.value } )  } value={form.age} />
-        { canVote===true ? <div>Yes you can vote</div> :  <div>No you cannot vote</div>  }
-      </div>
+      <div className={styles['container']} >
+          <div>
+              <h4 style={{textAlign:'center'}} >Shop</h4>
+          </div>
+          <div className={styles['product-items-container']} >
+            {
+              ( products.length )
+                ? products.map( ( item, index ) => {
+                    return ( <ProductCard key={index} product={item} /> )
+                  } )
+                : ( <PostLoader count={5} /> )
+            }
+          </div>
+        </div>      
     </>
   );
 
 }
 
-function Online() {
-
-  useEffect(() => {
-    console.log(`Online Component, useEffect with no second parameter`)
-  });
-
-  useEffect(() => {
-    console.log(`Online Component, useEffect with no second parameter as empty array, `)
-  }, [  ] );
-
-
-
-  return "Online";
-
-}
 
 export default App;
