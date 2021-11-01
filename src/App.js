@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './App.module.css'
-import PostLoader from 'components/loaders/post-loader'
+import ProductLoader from 'components/loaders/product-loader'
 import ProductCard from 'components/product-card'
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
                 ? products.map( ( item, index ) => {
                     return ( <ProductCard key={index} product={item} /> )
                   } )
-                : ( <PostLoader count={5} /> )
+                : ( <ProductLoader count={5} /> )
             }
           </div>
         </div>      

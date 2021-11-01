@@ -9,7 +9,7 @@ export default function ProductCard( { product, ...props } ) {
                     <img src={product.image} className={styles['product-card-image']} alt="" />
                 </div>
                 <div>
-                    <p className={styles['product-card-title']} >{product.title}</p>
+                    <p>{product.title}</p>
                 </div>
             </div> 
             <div className={styles['product-card-body']} >
